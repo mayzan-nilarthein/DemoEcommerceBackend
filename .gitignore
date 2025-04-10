@@ -1,0 +1,53 @@
+.en# Node modules
+/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*   # If you have multiple environment files like .env.local
+
+# Build output (if any, e.g., for bundling or transpiling)
+dist/
+build/
+coverage/
+
+# Dependency directory (for lock files)
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.swp
+*.swo
+*.bak
+
+# IDE-specific files (if you are using editors like VSCode)
+.vscode/
+.idea/
+
+# TypeScript compilation output (if applicable)
+*.tsbuildinfo
+
+# Other
+/.eslintcache
+/.next/
+
+# Database files (e.g., SQLite)
+*.sqlite
+
+# Yarn specific
+.yarn/
+.yarn-cache/
+.yarnrc.yml
+
+# Node.js modules
+node_modules/
