@@ -1,24 +1,23 @@
 const axios = require("axios");
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
+
 const { generateToken } = require("../utils/generateToken");
+const sendEmail = require("../utils/sendEmail");
+const generateOTP = require("../utils/generateOTP");
+const { GET_USER } = require("../graphql/queries");
+const { REGISTER_USER } = require("../graphql/mutations");
 
 dotenv.config();
+
+let otpStore = {};
 
 exports.registerUser = async (req, res) => {
   const { email, name, password } = req.body;
 
   try {
     const hashed = await bcrypt.hash(password, 10);
-    const mutation = `
-  mutation RegisterUser($email: String!, $name: String!, $password: String!) {
-    insert_users_one(object: {email: $email, name: $name, password: $password}) {
-      id
-      email
-      name
-    }
-  }
-`;
+    const mutation = REGISTER_USER;
 
     const response = await axios.post(
       process.env.HASURA_GRAPHQL_ENDPOINT,
@@ -48,16 +47,7 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const query = `
-    query GetUser($email: String!) {
-      users(where: {email: {_eq: $email}}) {
-        id
-        email
-        name
-        password
-      }
-    }
-  `;
+  const query = GET_USER;
 
   try {
     const response = await axios.post(
@@ -86,5 +76,36 @@ exports.loginUser = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Login failed" });
+  }
+};
+
+exports.sendOTP = async (req, res) => {
+  const { email } = req.body;
+
+  const otp = generateOTP();
+  otpStore[email] = otp;
+  console.log("OTPSTOREVALUE", otpStore);
+
+  console.log("generated otp : ", otp);
+
+  try {
+    await sendEmail(email, "KiKi Demo Ecommerce App", `Your OTP is: ${otp}`);
+    res.status(200).json({ message: "OTP sent successfully" });
+    console.log("Sending Email Response:", res);
+  } catch (err) {
+    console.error("Sending Email Error >>", err);
+    res.status(500).json({ error: "Failed to send OTP" });
+  }
+};
+
+exports.verifyOTP = (req, res) => {
+  const { email, otp } = req.body;
+  console.log("OTP STORE VALUE >>", otpStore);
+
+  if (otpStore[email] && otpStore[email] === otp) {
+    delete otpStore[email];
+    return res.status(200).json({ success: true, message: "OTP verified" });
+  } else {
+    return res.status(400).json({ success: false, message: "Invalid OTP" });
   }
 };

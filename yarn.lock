@@ -738,6 +738,7 @@ __metadata:
     mongoose: ^8.13.2
     nodemailer: ^6.10.0
     nodemon: ^3.1.9
+    otp-generator: ^4.0.1
     prettier: ^3.5.3
   languageName: unknown
   linkType: soft
@@ -2261,6 +2262,13 @@ __metadata:
     type-check: ^0.4.0
     word-wrap: ^1.2.5
   checksum: ecbd010e3dc73e05d239976422d9ef54a82a13f37c11ca5911dff41c98a6c7f0f163b27f922c37e7f8340af9d36febd3b6e9cef508f3339d4c393d7276d716bb
+  languageName: node
+  linkType: hard
+
+"otp-generator@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "otp-generator@npm:4.0.1"
+  checksum: f88972e355b4c58f103e2b59924d354c1ec165fc7dd9f6b61206a218cf4dd65b82e27fec6f720820d357284e5c423fe645f73768a23c889d6f6b6de21c69de28
   languageName: node
   linkType: hard
 
