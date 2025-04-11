@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const { generateToken } = require("../utils/generateToken");
 const sendEmail = require("../utils/sendEmail");
 const generateOTP = require("../utils/generateOTP");
-const { GET_USER } = require("../graphql/queries");
+const { GET_USER_BY_EMAIL } = require("../graphql/queries");
 const { REGISTER_USER } = require("../graphql/mutations");
 
 dotenv.config();
@@ -47,7 +47,7 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const query = GET_USER;
+  const query = GET_USER_BY_EMAIL;
 
   try {
     const response = await axios.post(
