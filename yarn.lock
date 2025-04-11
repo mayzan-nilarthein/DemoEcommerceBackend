@@ -417,6 +417,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bcryptjs@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "bcryptjs@npm:3.0.2"
+  bin:
+    bcrypt: bin/bcrypt
+  checksum: 91f878f184e8b627678bd13bd1d4fb576f9d95da98955a973436c949f68056953f131f4cced64adaa73f4c4946d6a69096368a29bd7252b4eb120b3e592d661d
+  languageName: node
+  linkType: hard
+
 "binary-extensions@npm:^2.0.0":
   version: 2.3.0
   resolution: "binary-extensions@npm:2.3.0"
@@ -718,6 +727,7 @@ __metadata:
   dependencies:
     axios: ^1.8.4
     bcrypt: ^5.1.1
+    bcryptjs: ^3.0.2
     cors: ^2.8.5
     dotenv: ^16.4.7
     eslint: ^9.24.0
@@ -726,6 +736,7 @@ __metadata:
     helmet: ^8.1.0
     jsonwebtoken: ^9.0.2
     mongoose: ^8.13.2
+    nodemailer: ^6.10.0
     nodemon: ^3.1.9
     prettier: ^3.5.3
   languageName: unknown
@@ -2136,6 +2147,13 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 2536282ba81f8a94b29482d3622b6ab298611440619e46de4512a6f32396a68b5530357c474b859787069d84a4c537d99e0c71078cce5b9f808bf84eeb78e8fb
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:^6.10.0":
+  version: 6.10.0
+  resolution: "nodemailer@npm:6.10.0"
+  checksum: 6d7fb0db8ceb521180a5346f2fbe84e9cf0872e9331e99ca4e420bd262407a92c34a17b0b921f17069daca50e908a099d463fcaa3a544b12564bf802574fa13f
   languageName: node
   linkType: hard
 
