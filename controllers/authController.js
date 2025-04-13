@@ -13,7 +13,7 @@ dotenv.config();
 let otpStore = {};
 
 exports.registerUser = async (req, res) => {
-  const { email, name, password } = req.body;
+  const { email, name, password } = req.body.input || req.body;
 
   try {
     const hashed = await bcrypt.hash(password, 10);
@@ -37,7 +37,14 @@ exports.registerUser = async (req, res) => {
 
     const token = generateToken(user.id);
 
-    res.status(201).json({ user, token });
+    res.status(201).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+      token,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Registration Failed!" });
@@ -93,7 +100,7 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.sendOTP = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body.input || req.body;
 
   const otp = generateOTP();
   otpStore[email] = otp;
@@ -112,7 +119,7 @@ exports.sendOTP = async (req, res) => {
 };
 
 exports.verifyOTP = (req, res) => {
-  const { email, otp } = req.body;
+  const { email, otp } = req.body.input || req.body;
   console.log("OTP STORE VALUE >>", otpStore);
 
   if (otpStore[email] && otpStore[email] === otp) {
