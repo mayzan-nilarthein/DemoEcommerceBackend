@@ -79,12 +79,10 @@ exports.loginUser = async (req, res) => {
 
     const token = generateToken(user.id);
     res.status(200).json({
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
+      data: {
+        user,
+        token,
       },
-      token,
     });
   } catch (err) {
     console.error(err);
