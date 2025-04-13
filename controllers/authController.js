@@ -110,7 +110,7 @@ exports.sendOTP = async (req, res) => {
 
   try {
     await sendEmail(email, "KiKi Demo Ecommerce App", `Your OTP is: ${otp}`);
-    res.status(200).json({ message: "OTP sent successfully" });
+    res.status(200).json({ success: true, message: "OTP sent successfully" });
     console.log("Sending Email Response:", res);
   } catch (err) {
     console.error("Sending Email Error >>", err);
