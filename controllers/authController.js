@@ -45,7 +45,7 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body.input || req.body;
   console.log("Login Param", email, password);
 
   const query = GET_USER_BY_EMAIL;
