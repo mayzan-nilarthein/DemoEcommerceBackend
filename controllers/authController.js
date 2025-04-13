@@ -46,6 +46,7 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log("Login Param", email, password);
 
   const query = GET_USER_BY_EMAIL;
 
@@ -65,14 +66,26 @@ exports.loginUser = async (req, res) => {
     );
 
     const user = response.data.data.users[0];
+    console.log("Graphql user response:", user);
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
 
     const token = generateToken(user.id);
-
-    res.status(200).json({ user, token });
+    res.status(200).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+      token,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Login failed" });
