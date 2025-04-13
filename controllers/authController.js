@@ -6,7 +6,7 @@ const { generateToken } = require("../utils/generateToken");
 const sendEmail = require("../utils/sendEmail");
 const generateOTP = require("../utils/generateOTP");
 const { GET_USER_BY_EMAIL } = require("../graphql/queries");
-const { REGISTER_USER } = require("../graphql/mutations");
+const { REGISTER_USER, UPDATE_USER_STATE } = require("../graphql/mutations");
 
 dotenv.config();
 
@@ -118,12 +118,27 @@ exports.sendOTP = async (req, res) => {
   }
 };
 
-exports.verifyOTP = (req, res) => {
+exports.verifyOTP = async (req, res) => {
   const { email, otp } = req.body.input || req.body;
   console.log("OTP STORE VALUE >>", otpStore);
 
   if (otpStore[email] && otpStore[email] === otp) {
     delete otpStore[email];
+    const updateUser = await axios.post(
+      HASURA_ENDPOINT,
+      {
+        query: UPDATE_USER_STATE,
+        variables: { email },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-hasura-admin-secret": process.env.HASURA_ADMIN_SECRET,
+        },
+      }
+    );
+    console.log("Update User Result", updateUser);
+
     return res.status(200).json({ success: true, message: "OTP verified" });
   } else {
     return res.status(400).json({ success: false, message: "Invalid OTP" });

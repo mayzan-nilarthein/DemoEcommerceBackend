@@ -7,6 +7,15 @@ const REGISTER_USER = `
     }
   }
 `;
+const UPDATE_USER_STATE = `
+mutation UpdateUser($email: String!) {
+      update_users(
+          where: {email: {_eq: $email}},
+          _set: {disabled: false}
+          ) {
+          affected_rows
+              }
+            }`;
 const UPDATE_USER_BY_ID = `
 mutation UpdateUser($id: Int!, $name: String) {
       update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name,}) {
@@ -29,4 +38,5 @@ module.exports = {
   REGISTER_USER,
   UPDATE_USER_BY_ID,
   UPDATE_PASSWORD,
+  UPDATE_USER_STATE,
 };
