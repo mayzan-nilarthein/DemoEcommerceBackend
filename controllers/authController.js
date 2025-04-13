@@ -125,7 +125,7 @@ exports.verifyOTP = async (req, res) => {
   if (otpStore[email] && otpStore[email] === otp) {
     delete otpStore[email];
     const updateUser = await axios.post(
-      HASURA_ENDPOINT,
+      process.env.HASURA_GRAPHQL_ENDPOINT,
       {
         query: UPDATE_USER_STATE,
         variables: { email },
