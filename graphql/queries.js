@@ -8,6 +8,16 @@ const GET_USER_BY_EMAIL = `
       }
     }
 `;
+const GET_ADMIN_BY_EMAIL = `
+  query GetAdminByEmail($email: String!) {
+      admin(where: {email: {_eq: $email}}) {
+        id
+        email
+        name
+        password
+      }
+    }
+`;
 
 const GET_USER_BY_ID = `
 query GetUserByID($id: Int!) {
@@ -19,5 +29,6 @@ query GetUserByID($id: Int!) {
     }`;
 module.exports = {
   GET_USER_BY_EMAIL,
+  GET_ADMIN_BY_EMAIL,
   GET_USER_BY_ID,
 };

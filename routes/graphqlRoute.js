@@ -1,10 +1,11 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const verifyToken = require("../middlewares/verifyToken");
 require("dotenv").config();
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   try {
     const response = await fetch(process.env.HASURA_GRAPHQL_ENDPOINT, {
       method: "POST",

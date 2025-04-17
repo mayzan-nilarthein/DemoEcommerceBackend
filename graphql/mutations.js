@@ -1,3 +1,12 @@
+const REGISTER_ADMIN = `
+   mutation RegisterAdmin($email: String!, $name: String!, $password: String!) {
+    insert_admin_one(object: {email: $email, name: $name, password: $password}) {
+      id
+      email
+      name
+    }
+  }
+`;
 const REGISTER_USER = `
    mutation RegisterUser($email: String!, $name: String!, $password: String!) {
     insert_users_one(object: {email: $email, name: $name, password: $password}) {
@@ -7,6 +16,15 @@ const REGISTER_USER = `
     }
   }
 `;
+const UPDATE_ADMIN_STATE = `
+mutation UpdateAdmin($email: String!) {
+      update_admin(
+          where: {email: {_eq: $email}},
+          _set: {disabled: false}
+          ) {
+          affected_rows
+              }
+            }`;
 const UPDATE_USER_STATE = `
 mutation UpdateUser($email: String!) {
       update_users(
@@ -36,7 +54,9 @@ mutation UpdatePassword($id: Int!, $password: String!) {
 
 module.exports = {
   REGISTER_USER,
+  REGISTER_ADMIN,
   UPDATE_USER_BY_ID,
   UPDATE_PASSWORD,
   UPDATE_USER_STATE,
+  UPDATE_ADMIN_STATE,
 };
