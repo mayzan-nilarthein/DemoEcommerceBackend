@@ -74,7 +74,7 @@ exports.loginAdmin = async (req, res) => {
     );
 
     const admin = response.data.data.admin[0];
-    console.log("Graphql admin response:", user);
+    console.log("Graphql admin response:", admin);
 
     if (!admin || !(await bcrypt.compare(password, admin.password))) {
       return res.status(401).json({ error: "Invalid credentials" });
